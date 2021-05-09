@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import Form from "./components/Form";
 import Principal from "./components/Principal";
 
 function App() {
     const [cords, setcords] = useState();
+    const [valueForm, setvalueForm] = useState();
 
     useEffect(() => {
         geoFindMe();
@@ -26,9 +28,10 @@ function App() {
 
     return (
         <div className="container">
+            <Form setvalueForm={setvalueForm} />
             <div className="card">
                 <h1>Weather Api</h1>
-                {cords && <Principal cords={cords} />}
+                {cords && <Principal cords={cords} valueForm={valueForm} />}
             </div>
         </div>
     );
