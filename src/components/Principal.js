@@ -10,31 +10,29 @@ const Principal = ({ cords, valueForm }) => {
 
     useEffect(() => {
         setloading(true);
+        const getWeather = async () => {
+            if (valueForm) {
+                try {
+                    const key = "2e5c74699170f16e6f8353811f1a8108";
+                    const url = `https://api.openweathermap.org/data/2.5/weather?q=${valueForm}&appid=${key}`;
+                    const response = await axios.get(url);
+                    setWeather(response.data);
+                    setNoFound(false);
+                } catch (error) {
+                    setNoFound(true);
+                }
+            } else {
+                const key = "2e5c74699170f16e6f8353811f1a8108";
+                const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`;
+                const response = await axios.get(url);
+                setWeather(response.data);
+            }
+        };
         getWeather();
         setTimeout(() => {
             setloading(false);
         }, 2000);
-    }, [valueForm]);
-
-    const getWeather = async () => {
-        if (valueForm) {
-            try {
-                const key = "2e5c74699170f16e6f8353811f1a8108";
-                const url = `https://api.openweathermap.org/data/2.5/weather?q=${valueForm}&appid=${key}`;
-                const response = await axios.get(url);
-                setWeather(response.data);
-                setNoFound(false);
-            } catch (error) {
-                setNoFound(true);
-            }
-        } else {
-            const key = "2e5c74699170f16e6f8353811f1a8108";
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${key}`;
-            const response = await axios.get(url);
-            setWeather(response.data);
-            console.log(response);
-        }
-    };
+    }, [valueForm, lat, lon]);
 
     return (
         <div className="card-body">
